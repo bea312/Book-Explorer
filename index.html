@@ -1,87 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Finder Pro 📚</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = { darkMode: 'class' };
-    </script>
+    <title>Book Explorer</title>
+    <link href="./dist/output.css" rel="stylesheet">
 </head>
-<body class="min-h-screen bg-gray-50 text-gray-900 transition-colors duration-300 dark:bg-gray-900 dark:text-gray-100">
-    <header class="sticky top-0 z-50 bg-white/90 shadow-md backdrop-blur dark:bg-gray-800/90">
-        <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-            <a href="index.html" class="flex items-center gap-2 text-2xl font-bold">
-                <span>📚</span> Book Finder
-            </a>
-            <div class="flex items-center gap-4 text-sm font-semibold">
-                <a href="favorites.html" class="text-blue-600 hover:underline dark:text-blue-400">My Library</a>
-                <a href="about.html" class="hover:underline">About</a>
-                <button id="theme-toggle" class="rounded-full bg-gray-100 p-2 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600">
-                    <span id="theme-icon">🌙</span>
-                </button>
-            </div>
-        </div>
-    </header>
 
-    <main class="mx-auto w-full max-w-7xl px-6">
-        <section class="py-10">
-            <div class="flex flex-col gap-4">
-                <div class="flex flex-col gap-4 md:flex-row">
-                    <input
-                        type="text"
-                        id="search-input"
-                        placeholder="Search for books by title or author..."
-                        class="flex-1 rounded-xl border-2 border-gray-200 bg-white p-4 text-sm transition focus:border-blue-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800"
-                    >
-                    <button id="search-btn" class="rounded-xl bg-blue-600 px-8 py-4 text-sm font-bold text-white shadow-lg transition hover:bg-blue-700">
-                        Search
+<body class="antialiased selection:bg-amber-200 selection:text-amber-900">
+
+    <nav class="sticky top-0 z-50 glass rounded-b-2xl mx-2 mt-2">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html"
+                    class="flex-shrink-0 font-bold text-2xl tracking-wider flex items-center text-slate-800 hover:opacity-80 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                        class="w-8 h-8 mr-2 text-amber-600">
+                        <path
+                            d="M11.25 4.533A9.707 9.707 0 006 3a9.735 9.735 0 00-3.25.555.75.75 0 00-.5.707v14.25a.75.75 0 001 .75c.739 0 1.527-.179 2.25-.533a7.18 7.18 0 013.25-.856c.923 0 1.81.117 2.625.341a.75.75 0 00.75-.75V5.25a.75.75 0 00-.375-.647zm1.5 0a.75.75 0 00-.375.647v13.75a.75.75 0 00.75.75c.815-.224 1.702-.341 2.625-.341a7.18 7.18 0 013.25.856c.723.354 1.511.533 2.25.533a.75.75 0 001-.75V4.262a.75.75 0 00-.5-.707A9.735 9.735 0 0018 3a9.707 9.707 0 00-5.25 1.533z" />
+                    </svg>
+                    BookExplorer
+                </a>
+
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="index.html"
+                            class="glass glass-hover px-4 py-2 rounded-full font-medium text-amber-700">Home</a>
+                        <a href="favorites.html"
+                            class="hover:bg-amber-100/50 text-slate-600 px-4 py-2 rounded-full transition font-medium">Favorites</a>
+                        <a href="about.html"
+                            class="hover:bg-amber-100/50 text-slate-600 px-4 py-2 rounded-full transition font-medium">About</a>
+                    </div>
+                </div>
+
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn"
+                        class="p-2 rounded-md text-slate-600 hover:text-amber-600 hover:bg-amber-100/50 focus:outline-none transition">
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
                     </button>
                 </div>
-
-                <div class="flex flex-wrap items-center gap-4">
-                    <span class="text-sm font-bold opacity-60">Filters:</span>
-                    <select id="filter-rating" class="rounded border p-2 dark:border-gray-700 dark:bg-gray-800">
-                        <option value="0">All Ratings</option>
-                        <option value="4">4+ Stars</option>
-                        <option value="3">3+ Stars</option>
-                    </select>
-                </div>
             </div>
+        </div>
 
-            <div id="loading" class="hidden mt-10 flex justify-center">
-                <div class="flex items-center gap-3 text-blue-600 dark:text-blue-400">
-                    <svg class="h-6 w-6 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+        <div id="mobile-menu"
+            class="hidden md:hidden border-t border-slate-200/50 bg-white/50 backdrop-blur-md rounded-b-2xl">
+            <div class="px-4 pt-2 pb-4 space-y-2">
+                <a href="index.html"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-amber-800 bg-amber-200/50">Home</a>
+                <a href="favorites.html"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:bg-amber-100 hover:text-amber-800">Favorites</a>
+                <a href="about.html"
+                    class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 hover:bg-amber-100 hover:text-amber-800">About</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+
+        <section class="text-center space-y-6 py-10">
+            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight text-slate-800 drop-shadow-sm">
+                Discover Your Next Adventure
+            </h1>
+            <p class="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto">
+                Explore thousands of books from the Open Library. Search by title and build your personal reading list.
+            </p>
+
+            <div class="max-w-xl mx-auto relative group">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-5 h-5 text-slate-400">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                     </svg>
-                    <span class="text-sm font-semibold">Loading books...</span>
                 </div>
+                <input type="text" id="search-input"
+                    class="block w-full glass pl-12 pr-32 py-4 rounded-full text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-400 transition duration-300 "
+                    placeholder="Search for a book title...">
+                <button id="search-btn"
+                    class="absolute inset-y-2 right-2 btn-primary py-2 px-6 rounded-full cursor-pointer transition duration-300 hover:-translate-0.5 hover:shadow-lg hover:scale-x-110">
+                    Search
+                </button>
             </div>
-            <div id="display-grid" class="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"></div>
+
+            <div id="loading-indicator" class="hidden text-center mt-4">
+                <div class="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-amber-600">
+                </div>
+                <p class="mt-2 text-slate-600">Searching books...</p>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="text-2xl font-bold mb-6 text-slate-800 border-b border-slate-300 pb-2 inline-block">Trending
+                Books</h2>
+
+            <div id="book-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+                <div class="glass glass-hover rounded-2xl overflow-hidden relative group flex flex-col">
+                    <div class="h-72 overflow-hidden relative flex justify-center items-center bg-slate-100 p-4">
+                        <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&q=80&w=400"
+                            alt="Book 1"
+                            class="h-full object-cover rounded-lg shadow-md group-hover:scale-105 transition duration-500">
+                    </div>
+                    <div class="p-5 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-800 leading-tight mb-1">The Art of Reading</h3>
+                            <p class="text-slate-600 text-sm mb-2">by Emma Watson</p>
+                        </div>
+                        <button
+                            class="mt-4 w-full py-2 bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-lg text-sm font-medium transition">Add
+                            to Favorites</button>
+                    </div>
+                </div>
+
+                <div class="glass glass-hover rounded-2xl overflow-hidden relative group flex flex-col">
+                    <div class="h-72 overflow-hidden relative flex justify-center items-center bg-slate-100 p-4">
+                        <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&q=80&w=400"
+                            alt="Book 2"
+                            class="h-full object-cover rounded-lg shadow-md group-hover:scale-105 transition duration-500">
+                    </div>
+                    <div class="p-5 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-800 leading-tight mb-1">Morning Thoughts</h3>
+                            <p class="text-slate-600 text-sm mb-2">by Marcus Aurelius</p>
+                        </div>
+                        <button
+                            class="mt-4 w-full py-2 bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-lg text-sm font-medium transition">Add
+                            to Favorites</button>
+                    </div>
+                </div>
+
+                <div class="glass glass-hover rounded-2xl overflow-hidden relative group flex flex-col">
+                    <div class="h-72 overflow-hidden relative flex justify-center items-center bg-slate-100 p-4">
+                        <img src="https://images.unsplash.com/photo-1495640388908-05fa85288e61?auto=format&fit=crop&q=80&w=400"
+                            alt="Book 3"
+                            class="h-full object-cover rounded-lg shadow-md group-hover:scale-105 transition duration-500">
+                    </div>
+                    <div class="p-5 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-800 leading-tight mb-1">The Lost Library</h3>
+                            <p class="text-slate-600 text-sm mb-2">by A.M. Jenkins</p>
+                        </div>
+                        <button
+                            class="mt-4 w-full py-2 bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-lg text-sm font-medium transition">Add
+                            to Favorites</button>
+                    </div>
+                </div>
+
+                <div class="glass glass-hover rounded-2xl overflow-hidden relative group flex flex-col">
+                    <div class="h-72 overflow-hidden relative flex justify-center items-center bg-slate-100 p-4">
+                        <img src="https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=400"
+                            alt="Book 4"
+                            class="h-full object-cover rounded-lg shadow-md group-hover:scale-105 transition duration-500">
+                    </div>
+                    <div class="p-5 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-800 leading-tight mb-1">Cozy Evenings</h3>
+                            <p class="text-slate-600 text-sm mb-2">by Sarah Maas</p>
+                        </div>
+                        <button
+                            class="mt-4 w-full py-2 bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-lg text-sm font-medium transition">Add
+                            to Favorites</button>
+                    </div>
+                </div>
+
+            </div>
         </section>
     </main>
 
-    <footer class="mt-16">
-        <div class="bg-blue-300 ">
-            <div class="mx-auto max-w-7xl px-6 py-12 text-white">
-                <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-                    <div>
-                        <h2 class="text-2xl font-bold">Book Finder Pro</h2>
-                        <p class="mt-2 text-sm text-white/80">
-                            Search, preview, and build your personal reading list with ease.
-                        </p>
-                    </div>
-                 
-                </div>
-                <div class="mt-8 flex flex-col gap-2 text-xs text-white/70 sm:flex-row sm:items-center sm:justify-between">
-                    <span>Powered by Open Library API</span>
-                   
-                </div>
-            </div>
+    <footer class="glass mt-10 py-8 text-center text-slate-600 text-sm mx-2 mb-2 rounded-2xl">
+        <div class="flex justify-center space-x-6 mb-5">
+            <a href="https://github.com/atul-dev-ai" target="_blank"
+                class="text-slate-400 hover:text-amber-600 transition">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                        d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.699-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.161 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
+                </svg>
+            </a>
+            <a href="https://www.linkedin.com/in/paul-atul/" target="_blank"
+                class="text-slate-400 hover:text-amber-600 transition">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                        d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z" />
+                </svg>
+            </a>
+            <a href="https://www.instagram.com/whois__atul" target="_blank"
+                class="text-slate-400 hover:text-amber-600 transition">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                        d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                </svg>
+            </a>
+            <a href="https://discord.gg/urhq2nXAEN" target="_blank"
+                class="text-slate-400 hover:text-amber-600 transition">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                        d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189z" />
+                </svg>
+            </a>
         </div>
+        <p>© 2026 Book Explorer | Copyright <a href="https://github.com/atul-dev-ai" target="_blank"
+                class="text-amber-600 hover:text-amber-700 hover:shadow-lg font-bold"> Atul Paul</a></p>
     </footer>
-    <script type="module" src="main.js"></script>
+
+    <script src="./js/app.js"></script>
 </body>
+
 </html>

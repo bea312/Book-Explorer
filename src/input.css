@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+/* src/input.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+@layer base {
+    body {
+        font-family: 'Poppins', sans-serif;
+        /* Ushno ar shanto background (Soft warm paper/sunny room feel) */
+        background: linear-gradient(to bottom right, #fdfbfb, #f3ede4);
+        background-attachment: fixed;
+        min-height: 100vh;
+        color: #334155; /* Slate-700 (Ektu soft kalo ronger text) */
+    }
+}
+
+@layer components {
+    /* Soft Glass Effect */
+    .glass {
+        @apply bg-white/60 backdrop-blur-lg border border-white/50 shadow-sm;
+    }
+
+    .glass-hover {
+        @apply transition duration-300 hover:bg-white/80 hover:shadow-md;
+    }
+
+    /* Warm Button */
+    .btn-primary {
+        @apply bg-amber-600 hover:bg-amber-700 text-white font-medium py-2 px-6 rounded-full transition duration-300 shadow-sm hover:shadow-md;
+    }
+}
