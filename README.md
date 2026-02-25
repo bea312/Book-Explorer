@@ -19,7 +19,7 @@ A fully responsive, multi-page web application that allows users to search for b
 - **Open Library API** (Data source)
 
 ## 🚀 Preview
-  <img src="preview.png>
+  <img src="preview.png">
 
 ## 🚀 How to Run the Project Locally
 
