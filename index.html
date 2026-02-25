@@ -3,9 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Book Finder Pro 📚</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { darkMode: 'class' };
+    </script>
 </head>
-<body>
-    
+<body class="min-h-screen bg-gray-50 text-gray-900 transition-colors duration-300 dark:bg-gray-900 dark:text-gray-100">
+    <header class="sticky top-0 z-50 bg-white/90 shadow-md backdrop-blur dark:bg-gray-800/90">
+        <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+            <a href="index.html" class="flex items-center gap-2 text-2xl font-bold">
+                <span>📚</span> Book Finder
+            </a>
+            <div class="flex items-center gap-4 text-sm font-semibold">
+                <a href="favorites.html" class="text-blue-600 hover:underline dark:text-blue-400">My Library</a>
+                <a href="about.html" class="hover:underline">About</a>
+                <button id="theme-toggle" class="rounded-full bg-gray-100 p-2 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600">
+                    <span id="theme-icon">🌙</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="mx-auto w-full max-w-7xl px-6">
+        <section class="py-10">
+            <div class="flex flex-col gap-4">
+                <div class="flex flex-col gap-4 md:flex-row">
+                    <input
+                        type="text"
+                        id="search-input"
+                        placeholder="Search for books by title or author..."
+                        class="flex-1 rounded-xl border-2 border-gray-200 bg-white p-4 text-sm transition focus:border-blue-500 focus:outline-none dark:border-gray-700 dark:bg-gray-800"
+                    >
+                    <button id="search-btn" class="rounded-xl bg-blue-600 px-8 py-4 text-sm font-bold text-white shadow-lg transition hover:bg-blue-700">
+                        Search
+                    </button>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-4">
+                    <span class="text-sm font-bold opacity-60">Filters:</span>
+                    <select id="filter-rating" class="rounded border p-2 dark:border-gray-700 dark:bg-gray-800">
+                        <option value="0">All Ratings</option>
+                        <option value="4">4+ Stars</option>
+                        <option value="3">3+ Stars</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="loading" class="hidden mt-10 flex justify-center">
+                <div class="flex items-center gap-3 text-blue-600 dark:text-blue-400">
+                    <svg class="h-6 w-6 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+                    </svg>
+                    <span class="text-sm font-semibold">Loading books...</span>
+                </div>
+            </div>
+            <div id="display-grid" class="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"></div>
+        </section>
+    </main>
+
+    <footer class="mt-16">
+        <div class="bg-blue-300 ">
+            <div class="mx-auto max-w-7xl px-6 py-12 text-white">
+                <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+                    <div>
+                        <h2 class="text-2xl font-bold">Book Finder Pro</h2>
+                        <p class="mt-2 text-sm text-white/80">
+                            Search, preview, and build your personal reading list with ease.
+                        </p>
+                    </div>
+                 
+                </div>
+                <div class="mt-8 flex flex-col gap-2 text-xs text-white/70 sm:flex-row sm:items-center sm:justify-between">
+                    <span>Powered by Open Library API</span>
+                   
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script type="module" src="main.js"></script>
 </body>
 </html>
